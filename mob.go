@@ -49,7 +49,7 @@ func startTimer(timerInMinutes string) {
 
   var command *exec.Cmd
   if runtime.GOOS == "darwin" {
-    command = exec.Command("sh", "-c", "( sleep "+timerInSeconds+" && say \"time's up - OSX\" && osascript -e 'display notification \"Time is up\" with title \"Mob Session\"' & )")
+    command = exec.Command("sh", "-c", "( sleep "+timerInSeconds+" && say \"time's up\" && osascript -e 'display notification \"Time is up\" with title \"Mob Session\"' & )")
   } else {
     command = exec.Command("sh", "-c", "( sleep "+timerInSeconds+" && say \"time's up\" && notify-send \"Mob Session\" \"Time's up\" & )")
   }
