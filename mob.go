@@ -1,6 +1,7 @@
 package main
 
 import (
+  "runtime"
 	"fmt"
 	"os"
 	"os/exec"
@@ -46,7 +47,12 @@ func startTimer(timerInMinutes string) {
 	timeoutInSeconds := timeoutInMinutes * 60
 	timerInSeconds := strconv.Itoa(timeoutInSeconds)
 
-	command := exec.Command("sh", "-c", "( sleep "+timerInSeconds+" && say \"time's up\" & )")
+  var command *exec.Cmd
+  if runtime.GOOS == "darwin" {
+    command = exec.Command("sh", "-c", "( sleep "+timerInSeconds+" && say \"time's up - OSX\" && osascript -e 'display notification \"Time is up\" with title \"Mob Session\"' & )")
+  } else {
+    command = exec.Command("sh", "-c", "( sleep "+timerInSeconds+" && say \"time's up\" && notify-send \"Mob Session\" \"Time's up\" & )")
+  }
 	if isDebug() {
 		fmt.Println(command.Args)
 	}
@@ -181,7 +187,11 @@ func status() {
 	}
 
 	if !hasSay() {
-		sayNote("text-to-speech disabled because 'say' not found")
+    if runtime.GOOS == "darwin" {
+      sayNote("text-to-speech disabled because 'say' not found")
+    } else {
+      sayNote("text-to-speech disable because 'say' not found. Try installing gnustep-gui-runtime (sudo apt install gnustep-gui-runtime)")
+    }
 	}
 }
 
