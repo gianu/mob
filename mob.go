@@ -130,7 +130,7 @@ func next() {
 		git("add", "--all")
 		git("commit", "--message", "\"WIP in Mob Session [ci-skip]\"")
 		changes := getChangesOfLastCommit()
-		git("push", "origin", branch)
+		git("push", "--no-verify", "origin", branch)
 		say(changes)
 		showNext()
 	}
