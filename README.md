@@ -49,7 +49,7 @@ Prints out any git commands and their results.
 
 ```bash
 $ brew install golang
-$ git clone https://github.com/simonharrer/mob
+$ git clone https://github.com/gianu/mob
 $ cd mob
 $ ./install
 # Now, you can use the mob tool from anywhere directory in the terminal
